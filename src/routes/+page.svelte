@@ -202,5 +202,6 @@
 				diffuse the f rest
 			</button>
 		</div>
+		<p class="mt-2 opacity-50">pro tip: upload img by dropping on the canvas</p>
 	</div>
 </div>
