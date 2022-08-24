@@ -81,7 +81,7 @@
 
 		const imgFile = await getCanvasSnapshot(canvas);
 		const form = new FormData();
-		form.append('prompt', 'owl');
+		form.append('prompt', txt);
 		form.append('image', imgFile);
 
 		const response = await fetch('https://sdb.pcuenca.net/i2i', {
