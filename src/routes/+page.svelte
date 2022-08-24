@@ -190,7 +190,7 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/drawingboard.js/0.4.2/drawingboard.min.js"></script>
 </svelte:head>
 
-<div class="flex flex-wrap gap-x-8 justify-center mt-16">
+<div class="flex flex-wrap gap-x-8 justify-center mt-8">
 	<div class={isLoading ? 'pointer-events-none' : ''}>
 		<div id="board-container" style="width: 512px;height: 545px;" />
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
