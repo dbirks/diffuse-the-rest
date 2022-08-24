@@ -56,12 +56,16 @@
 		}
 	}
 
-	async function getCanvasSnapshot(canvas: HTMLCanvasElement): Promise<File> {
+	async function getCanvasSnapshot(
+		canvas: HTMLCanvasElement
+	): Promise<{ imgFile: File; imgBitmap: ImageBitmap }> {
 		const canvasDataUrl = canvas.toDataURL('png');
 		const res = await fetch(canvasDataUrl);
 		const blob = await res.blob();
 		const imgFile = new File([blob], 'canvas shot.png', { type: 'image/png' });
-		return imgFile;
+		const imgData = canvas.getContext('2d')!.getImageData(0, 0, canvasSize, canvasSize);
+		const imgBitmap = await createImageBitmap(imgData);
+		return { imgFile, imgBitmap };
 	}
 
 	async function submitRequest() {
@@ -79,7 +83,7 @@
 		noiseTs = performance.now();
 		drawNoise();
 
-		const imgFile = await getCanvasSnapshot(canvas);
+		const { imgFile, imgBitmap } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
 		form.append('prompt', txt);
 		form.append('image', imgFile);
@@ -94,7 +98,7 @@
 
 			const { images: imagesBase64Strs }: { images: string[] } = json;
 
-			const imgEls = await Promise.all(
+			const imgEls = (await Promise.all(
 				imagesBase64Strs.map(async (imgBase64Str) => {
 					const imgEl = new Image();
 					imgEl.src = `data:image/png;base64, ${imgBase64Str}`;
@@ -104,7 +108,8 @@
 					});
 					return imgEl;
 				})
-			);
+			)) as CanvasImageSource[];
+			imgEls.push(imgBitmap); // add the original sketch
 
 			isLoading = false;
 
