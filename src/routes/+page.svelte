@@ -89,46 +89,51 @@
 			body: form
 		});
 
-		const json = JSON.parse(await response.text());
+		try {
+			const json = JSON.parse(await response.text());
 
-		const { images: imagesBase64Strs }: { images: string[] } = json;
+			const { images: imagesBase64Strs }: { images: string[] } = json;
 
-		const imgEls = await Promise.all(
-			imagesBase64Strs.map(async (imgBase64Str) => {
-				const imgEl = new Image();
-				imgEl.src = `data:image/png;base64, ${imgBase64Str}`;
-				// await image.onload
-				await new Promise((resolve, _) => {
-					imgEl.onload = () => resolve(imgEl);
-				});
-				return imgEl;
-			})
-		);
+			const imgEls = await Promise.all(
+				imagesBase64Strs.map(async (imgBase64Str) => {
+					const imgEl = new Image();
+					imgEl.src = `data:image/png;base64, ${imgBase64Str}`;
+					// await image.onload
+					await new Promise((resolve, _) => {
+						imgEl.onload = () => resolve(imgEl);
+					});
+					return imgEl;
+				})
+			);
 
-		isLoading = false;
+			isLoading = false;
 
-		if (interval) {
-			clearInterval(interval);
-		}
-		let i = 0;
-		imageTs = performance.now();
-		drawImage(imgEls[i % imgEls.length]);
-		drawNextImage = () => {
 			if (interval) {
 				clearInterval(interval);
 			}
-			imageTs = performance.now();
-			i = i + 1;
-			drawImage(imgEls[i % imgEls.length]);
-		};
-		interval = setInterval(() => {
-			i = i + 1;
+			let i = 0;
 			imageTs = performance.now();
 			drawImage(imgEls[i % imgEls.length]);
-		}, 2500);
+			drawNextImage = () => {
+				if (interval) {
+					clearInterval(interval);
+				}
+				imageTs = performance.now();
+				i = i + 1;
+				drawImage(imgEls[i % imgEls.length]);
+			};
+			interval = setInterval(() => {
+				i = i + 1;
+				imageTs = performance.now();
+				drawImage(imgEls[i % imgEls.length]);
+			}, 2500);
 
-		if (!isOutputControlAdded) {
-			addOutputControls();
+			if (!isOutputControlAdded) {
+				addOutputControls();
+			}
+		} catch (err) {
+			console.error(err);
+			alert('Error happened: please see console');
 		}
 	}
 
@@ -149,7 +154,7 @@
 				if (interval) {
 					clearInterval(interval);
 				}
-			}
+			};
 		}
 	}
 
