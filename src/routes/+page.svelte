@@ -171,7 +171,9 @@
 				{ Size: { type: 'dropdown' } },
 				{ DrawingMode: { filler: false } },
 				'Navigation'
-			]
+			],
+			droppable: true,
+			webStorage: false
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
