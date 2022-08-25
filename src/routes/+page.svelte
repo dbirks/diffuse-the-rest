@@ -171,7 +171,7 @@
 		containerEl.style.height = `${canvasSize}px`;
 		await tick();
 		const drawingBoard = new window.DrawingBoard.Board('board-container', {
-			size: 10,
+			size: 15,
 			controls: [
 				'Color',
 				{ Size: { type: 'dropdown' } },
