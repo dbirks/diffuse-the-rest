@@ -15,7 +15,7 @@
 	const animNoiseDuration = 3000 as const;
 	let canvasSize = 400;
 	let containerEl: HTMLDivElement;
-	let sketchImgEl: HTMLImageElement;
+	let sketchEl: HTMLCanvasElement;
 	let isShowSketch = false;
 
 	async function drawNoise() {
@@ -61,12 +61,14 @@
 
 	async function getCanvasSnapshot(
 		canvas: HTMLCanvasElement
-	): Promise<{ imgFile: File; imgDataUrl: string }> {
-		const imgDataUrl = canvas.toDataURL('png');
-		const res = await fetch(imgDataUrl);
+	): Promise<{ imgFile: File; imgBitmap: ImageBitmap }> {
+		const canvasDataUrl = canvas.toDataURL('png');
+		const res = await fetch(canvasDataUrl);
 		const blob = await res.blob();
 		const imgFile = new File([blob], 'canvas shot.png', { type: 'image/png' });
-		return { imgFile, imgDataUrl };
+		const imgData = canvas.getContext('2d')!.getImageData(0, 0, canvasSize, canvasSize);
+		const imgBitmap = await createImageBitmap(imgData);
+		return { imgFile, imgBitmap };
 	}
 
 	async function submitRequest() {
@@ -79,13 +81,14 @@
 		}
 
 		isLoading = true;
-		isShowSketch=false;
+		isShowSketch = false;
+		copySketch();
 
 		// start noise animation
 		noiseTs = performance.now();
 		drawNoise();
 
-		const { imgFile, imgDataUrl } = await getCanvasSnapshot(canvas);
+		const { imgFile, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
 		form.append('prompt', txt);
 		form.append('image', imgFile);
@@ -117,9 +120,8 @@
 			if (interval) {
 				clearInterval(interval);
 			}
-			sketchImgEl.width=canvasSize;
-			sketchImgEl.src=imgDataUrl;
-			isShowSketch=true;
+
+			isShowSketch = true;
 			let i = 0;
 			imageTs = performance.now();
 			drawImage(imgEls[i % imgEls.length]);
@@ -167,22 +169,31 @@
 		}
 	}
 
+	function copySketch() {
+		const context = sketchEl.getContext('2d');
+
+		//set dimensions
+		sketchEl.width = canvas.width;
+		sketchEl.height = canvas.height;
+
+		//apply the old canvas to the new one
+		context!.drawImage(canvas, 0, 0);
+	}
+
 	onMount(async () => {
-		const {innerWidth: windowWidth} = window;
-		canvasSize = Math.min(canvasSize, Math.floor(windowWidth*0.75));
+		const { innerWidth: windowWidth } = window;
+		canvasSize = Math.min(canvasSize, Math.floor(windowWidth * 0.75));
 		containerEl.style.width = `${canvasSize}px`;
 		containerEl.style.height = `${canvasSize}px`;
+		sketchEl.style.width = `${canvasSize}px`;
+		sketchEl.style.height = `${canvasSize}px`;
 		await tick();
 		const drawingBoard = new window.DrawingBoard.Board('board-container', {
 			size: 10,
-			controls: [
-				'Color',
-				{ Size: { type: 'dropdown' } },
-				{ DrawingMode: { filler: false } },
-			],
+			controls: ['Color', { Size: { type: 'dropdown' } }, { DrawingMode: { filler: false } }],
 			droppable: true,
 			webStorage: false,
-			enlargeYourContainer: true,
+			enlargeYourContainer: true
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
@@ -200,9 +211,12 @@
 </svelte:head>
 
 <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-8">
-	<img alt="Initial sketch" class="border-2 {!isShowSketch ? 'hidden' : ''}" bind:this={sketchImgEl}>
+	<canvas
+		class="border-2 {!isShowSketch ? 'hidden' : ''}"
+		bind:this={sketchEl}
+	/>
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
-		<div id="board-container" bind:this={containerEl}/>
+		<div id="board-container" bind:this={containerEl} />
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
 			<input type="text" class="border-2 " placeholder="Add prompt" bind:value={txt} />
 			<button
