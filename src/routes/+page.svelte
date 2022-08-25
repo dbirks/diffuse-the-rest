@@ -197,8 +197,8 @@
 </svelte:head>
 
 <div class="flex flex-wrap gap-x-8 justify-center mt-8">
-	<div class={isLoading ? 'pointer-events-none' : ''}>
-		<div id="board-container" bind:this={containerEl} />
+	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
+		<div id="board-container" bind:this={containerEl}/>
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
 			<input type="text" class="border-2 " placeholder="Add prompt" bind:value={txt} />
 			<button
