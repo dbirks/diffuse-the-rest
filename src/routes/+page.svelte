@@ -161,7 +161,7 @@
 		if (controlsEl) {
 			controlsEl.appendChild(div);
 			isOutputControlAdded = true;
-			(controlsEl as HTMLElement).onclick = () => {
+			containerEl.onclick = () => {
 				if (interval) {
 					clearInterval(interval);
 				}
