@@ -170,7 +170,6 @@
 				'Color',
 				{ Size: { type: 'dropdown' } },
 				{ DrawingMode: { filler: false } },
-				'Navigation'
 			],
 			droppable: true,
 			webStorage: false
