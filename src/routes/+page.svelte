@@ -13,7 +13,7 @@
 
 	const animImageDuration = 500 as const;
 	const animNoiseDuration = 3000 as const;
-	const canvasSize = 512 as const;
+	const canvasSize = 300 as const;
 
 	async function drawNoise() {
 		if (!ctx) {
@@ -172,7 +172,8 @@
 				{ DrawingMode: { filler: false } },
 			],
 			droppable: true,
-			webStorage: false
+			webStorage: false,
+			enlargeYourContainer: true,
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
@@ -191,7 +192,7 @@
 
 <div class="flex flex-wrap gap-x-8 justify-center mt-8">
 	<div class={isLoading ? 'pointer-events-none' : ''}>
-		<div id="board-container" style="width: 512px;height: 545px;" />
+		<div id="board-container" style="width: {canvasSize}px;height: {canvasSize}px;" />
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
 			<input type="text" class="border-2 " placeholder="Add prompt" bind:value={txt} />
 			<button
