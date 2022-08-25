@@ -13,8 +13,10 @@
 
 	const animImageDuration = 500 as const;
 	const animNoiseDuration = 3000 as const;
-	let canvasSize = 512;
+	let canvasSize = 400;
 	let containerEl: HTMLDivElement;
+	let sketchImgEl: HTMLImageElement;
+	let isShowSketch = false;
 
 	async function drawNoise() {
 		if (!ctx) {
@@ -59,14 +61,12 @@
 
 	async function getCanvasSnapshot(
 		canvas: HTMLCanvasElement
-	): Promise<{ imgFile: File; imgBitmap: ImageBitmap }> {
-		const canvasDataUrl = canvas.toDataURL('png');
-		const res = await fetch(canvasDataUrl);
+	): Promise<{ imgFile: File; imgDataUrl: string }> {
+		const imgDataUrl = canvas.toDataURL('png');
+		const res = await fetch(imgDataUrl);
 		const blob = await res.blob();
 		const imgFile = new File([blob], 'canvas shot.png', { type: 'image/png' });
-		const imgData = canvas.getContext('2d')!.getImageData(0, 0, canvasSize, canvasSize);
-		const imgBitmap = await createImageBitmap(imgData);
-		return { imgFile, imgBitmap };
+		return { imgFile, imgDataUrl };
 	}
 
 	async function submitRequest() {
@@ -79,12 +79,13 @@
 		}
 
 		isLoading = true;
+		isShowSketch=false;
 
 		// start noise animation
 		noiseTs = performance.now();
 		drawNoise();
 
-		const { imgFile, imgBitmap } = await getCanvasSnapshot(canvas);
+		const { imgFile, imgDataUrl } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
 		form.append('prompt', txt);
 		form.append('image', imgFile);
@@ -110,13 +111,15 @@
 					return imgEl;
 				})
 			)) as CanvasImageSource[];
-			imgEls.push(imgBitmap); // add the original sketch
 
 			isLoading = false;
 
 			if (interval) {
 				clearInterval(interval);
 			}
+			sketchImgEl.width=canvasSize;
+			sketchImgEl.src=imgDataUrl;
+			isShowSketch=true;
 			let i = 0;
 			imageTs = performance.now();
 			drawImage(imgEls[i % imgEls.length]);
@@ -196,7 +199,8 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/drawingboard.js/0.4.2/drawingboard.min.js"></script>
 </svelte:head>
 
-<div class="flex flex-wrap gap-x-8 justify-center mt-8">
+<div class="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-8">
+	<img alt="Initial sketch" class="border-2 {!isShowSketch ? 'hidden' : ''}" bind:this={sketchImgEl}>
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
 		<div id="board-container" bind:this={containerEl}/>
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
