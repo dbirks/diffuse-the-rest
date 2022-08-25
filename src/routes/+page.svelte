@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	let txt = '';
 	let isLoading = false;
@@ -13,7 +13,8 @@
 
 	const animImageDuration = 500 as const;
 	const animNoiseDuration = 3000 as const;
-	const canvasSize = 300 as const;
+	let canvasSize = 512;
+	let containerEl: HTMLDivElement;
 
 	async function drawNoise() {
 		if (!ctx) {
@@ -163,7 +164,12 @@
 		}
 	}
 
-	onMount(() => {
+	onMount(async () => {
+		const {innerWidth: windowWidth} = window;
+		canvasSize = Math.min(canvasSize, Math.floor(windowWidth*0.75));
+		containerEl.style.width = `${canvasSize}px`;
+		containerEl.style.height = `${canvasSize}px`;
+		await tick();
 		const drawingBoard = new window.DrawingBoard.Board('board-container', {
 			size: 10,
 			controls: [
@@ -192,7 +198,7 @@
 
 <div class="flex flex-wrap gap-x-8 justify-center mt-8">
 	<div class={isLoading ? 'pointer-events-none' : ''}>
-		<div id="board-container" style="width: {canvasSize}px;height: {canvasSize}px;" />
+		<div id="board-container" bind:this={containerEl} />
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
 			<input type="text" class="border-2 " placeholder="Add prompt" bind:value={txt} />
 			<button
