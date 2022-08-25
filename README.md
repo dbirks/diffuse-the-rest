@@ -13,8 +13,8 @@ app_file: build/index.html
 To develop locally:
 
 ```
-git clone https://huggingface.co/spaces/huggingface/diffuse-the-res
-cd diffuse-the-res
+git clone https://huggingface.co/spaces/huggingface/diffuse-the-rest
+cd diffuse-the-rest
 npm ci
 NODE_ENV="development" npm run dev -- --open
 ```
