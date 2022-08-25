@@ -211,10 +211,7 @@
 </svelte:head>
 
 <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-8">
-	<canvas
-		class="border-2 {!isShowSketch ? 'hidden' : ''}"
-		bind:this={sketchEl}
-	/>
+	<canvas class="border-2 {!isShowSketch ? 'hidden' : ''}" bind:this={sketchEl} />
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
 		<div id="board-container" bind:this={containerEl} />
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
