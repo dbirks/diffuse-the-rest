@@ -187,6 +187,8 @@
 		btn.innerHTML = '🧹';
 		btn.onclick = () => {
 			ctx?.clearRect(0, 0, canvasSize, canvasSize);
+			outputImgs = [];
+			isShowSketch = false;
 		};
 		div.append(btn);
 
