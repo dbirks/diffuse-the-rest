@@ -252,6 +252,7 @@
 	}
 
 	onMount(async () => {
+		console.log("ONMOUNT svelte")
 		const { innerWidth: windowWidth } = window;
 		canvasSize = Math.min(canvasSize, Math.floor(windowWidth * 0.75));
 		canvasContainerEl.style.width = `${canvasSize}px`;
