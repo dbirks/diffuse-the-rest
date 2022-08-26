@@ -341,6 +341,7 @@
 					type="text"
 					class="border-2 py-1"
 					placeholder="Add prompt"
+					maxlength="200"
 					on:keydown={onKeyDown}
 					bind:value={txt}
 				/>
