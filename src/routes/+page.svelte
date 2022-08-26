@@ -304,6 +304,14 @@
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
+		canvas.onmouseover = function (e) {
+			e.preventDefault();
+			return false;
+		};
+		canvas.onmouseenter = function (e) {
+			e.preventDefault();
+			return false;
+		};
 		canvas.ondragover = function (e) {
 			e.preventDefault();
 			return false;
