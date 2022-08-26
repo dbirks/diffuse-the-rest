@@ -83,6 +83,9 @@
 			return;
 		}
 
+		if (interval) {
+			clearInterval(interval);
+		}
 		isLoading = true;
 		isShowSketch = false;
 		copySketch();
@@ -126,10 +129,6 @@
 			)) as CanvasImageSource[];
 
 			isLoading = false;
-
-			if (interval) {
-				clearInterval(interval);
-			}
 
 			isShowSketch = true;
 			let i = 0;
