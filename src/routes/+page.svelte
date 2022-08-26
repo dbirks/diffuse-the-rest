@@ -143,6 +143,8 @@
 			if (!isOutputControlAdded) {
 				addOutputControls();
 			}
+
+			await scrollToBottom();
 		} catch (err) {
 			console.error(err);
 			alert('Error happened: please see console');
@@ -181,6 +183,11 @@
 		context!.drawImage(canvas, 0, 0);
 	}
 
+	async function scrollToBottom() {
+		await tick();
+		window.scrollTo(0, document.body.scrollHeight);
+	}
+
 	onMount(async () => {
 		const { innerWidth: windowWidth } = window;
 		canvasSize = Math.min(canvasSize, Math.floor(windowWidth * 0.75));
@@ -198,8 +205,7 @@
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
-		await tick();
-		containerEl?.scrollIntoView({ behavior: 'smooth' });
+		await scrollToBottom();
 	});
 </script>
 
