@@ -293,15 +293,6 @@
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
 		<div id="board-container" bind:this={canvasContainerEl} />
 		<div>
-			<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
-				<input type="text" class="border-2 " placeholder="Add prompt" bind:value={txt} />
-				<button
-					on:click={submitRequest}
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
-				>
-					diffuse the f rest
-				</button>
-			</div>
 			<p class="no-hover:hidden mt-2 opacity-50">
 				pro tip: upload img by pasting OR dropping on the canvas
 			</p>
@@ -316,6 +307,15 @@
 					/>
 					upload img
 				</label>
+			</div>
+			<div class="flex gap-x-2 mt-2 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
+				<input type="text" class="border-2 py-1" placeholder="Add prompt" bind:value={txt} />
+				<button
+					on:click={submitRequest}
+					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4"
+				>
+					diffuse the f rest
+				</button>
 			</div>
 		</div>
 	</div>
