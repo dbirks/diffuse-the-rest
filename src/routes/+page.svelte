@@ -16,6 +16,7 @@
 	let canvasSize = 400;
 	let containerEl: HTMLDivElement;
 	let canvasContainerEl: HTMLDivElement;
+	let fileInput: HTMLInputElement;
 	let sketchEl: HTMLCanvasElement;
 	let isShowSketch = false;
 
@@ -187,6 +188,14 @@
 		context!.drawImage(canvas, 0, 0);
 	}
 
+	function onChange() {
+		const file = fileInput.files?.[0];
+		if (file) {
+			// todo: upload file
+			// onSelectFile(file);
+		}
+	}
+
 	onMount(async () => {
 		const { innerWidth: windowWidth } = window;
 		canvasSize = Math.min(canvasSize, Math.floor(windowWidth * 0.75));
@@ -227,15 +236,29 @@
 	/>
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
 		<div id="board-container" bind:this={canvasContainerEl} />
-		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
-			<input type="text" class="border-2 " placeholder="Add prompt" bind:value={txt} />
-			<button
-				on:click={submitRequest}
-				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
-			>
-				diffuse the f rest
-			</button>
+		<div>
+			<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
+				<input type="text" class="border-2 " placeholder="Add prompt" bind:value={txt} />
+				<button
+					on:click={submitRequest}
+					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4"
+				>
+					diffuse the f rest
+				</button>
+			</div>
+			<p class="with-hover:hidden mt-2 opacity-50">pro tip: upload img by dropping on the canvas</p>
+			<div class="mt-1">
+				<label class="border py-1 px-1.5 bg-slate-200 cursor-pointer">
+					<input
+						accept="image/*"
+						bind:this={fileInput}
+						on:change={onChange}
+						style="display: none;"
+						type="file"
+					/>
+					upload img
+				</label>
+			</div>
 		</div>
-		<p class="mt-2 opacity-50">pro tip: upload img by dropping on the canvas</p>
 	</div>
 </div>

@@ -5,7 +5,12 @@ module.exports = {
 		screens: {
 			desktop: '816px'
 		},
-		extend: {}
+		extend: {
+			screens: {
+				'with-hover': { raw: '(hover: hover)' },
+				'no-hover': { raw: '(hover: none)' }
+			}
+		}
 	},
 	plugins: []
 };
