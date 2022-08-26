@@ -369,7 +369,7 @@
 </div>
 
 
-<article class="prose-sm md:px-8 lg:px-24 mb-8">
+<article class="prose-sm px-2 md:px-8 lg:px-24 mb-8">
 
 	<div class="text-center">
 
