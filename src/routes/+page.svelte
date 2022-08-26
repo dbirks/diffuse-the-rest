@@ -104,6 +104,12 @@
 
 			const { images: imagesBase64Strs }: { images: string[] } = json;
 
+			if (!imagesBase64Strs.length) {
+				return alert(
+					'All the results were flagged. Please try again with diffeerent sketch + prompt'
+				);
+			}
+
 			const imgEls = (await Promise.all(
 				imagesBase64Strs.map(async (imgBase64Str) => {
 					const imgEl = new Image();
@@ -143,11 +149,9 @@
 			if (!isOutputControlAdded) {
 				addOutputControls();
 			}
-
-			await scrollToBottom();
 		} catch (err) {
 			console.error(err);
-			alert('Error happened: please see console');
+			alert('Error happened, queue might be full. Please try again in a bit :)');
 		}
 	}
 
@@ -183,12 +187,6 @@
 		context!.drawImage(canvas, 0, 0);
 	}
 
-	async function scrollToBottom() {
-		return;
-		await tick();
-		window.scrollTo(0, document.body.scrollHeight);
-	}
-
 	onMount(async () => {
 		const { innerWidth: windowWidth } = window;
 		canvasSize = Math.min(canvasSize, Math.floor(windowWidth * 0.75));
@@ -206,7 +204,6 @@
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
-		await scrollToBottom();
 	});
 </script>
 
