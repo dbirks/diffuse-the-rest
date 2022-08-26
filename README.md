@@ -1,8 +1,8 @@
 ---
 title: Diffuse The Rest
-emoji: ⚡️
-colorFrom: yellow
-colorTo: red
+emoji: 🦉
+colorFrom: indigo
+colorTo: green
 sdk: static
 pinned: false
 app_file: build/index.html
