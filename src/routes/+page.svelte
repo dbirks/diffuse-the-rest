@@ -184,6 +184,7 @@
 	}
 
 	async function scrollToBottom() {
+		return;
 		await tick();
 		window.scrollTo(0, document.body.scrollHeight);
 	}
@@ -221,7 +222,7 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.contentWindow.min.js"></script>
 </svelte:head>
 
-<div bind:this={containerEl} class="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-8">
+<div bind:this={containerEl} class="flex flex-wrap gap-x-4 gap-y-2 justify-center my-8">
 	<canvas class="border-2 {!isShowSketch ? 'hidden' : ''}" bind:this={sketchEl} />
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
 		<div id="board-container" bind:this={canvasContainerEl} />
