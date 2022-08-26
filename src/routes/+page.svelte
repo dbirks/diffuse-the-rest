@@ -11,14 +11,15 @@
 	let imageTs: DOMHighResTimeStamp;
 	let drawNextImage: () => void;
 	let interval: ReturnType<typeof setInterval>;
-
-	const animImageDuration = 500 as const;
-	const animNoiseDuration = 3000 as const;
 	let canvasSize = 400;
 	let canvasContainerEl: HTMLDivElement;
 	let fileInput: HTMLInputElement;
 	let sketchEl: HTMLCanvasElement;
 	let isShowSketch = false;
+	let outputImgs: CanvasImageSource[] = [];
+
+	const animImageDuration = 500 as const;
+	const animNoiseDuration = 3000 as const;
 
 	async function drawNoise() {
 		if (!ctx) {
@@ -112,7 +113,7 @@
 				);
 			}
 
-			const imgEls = (await Promise.all(
+			outputImgs = (await Promise.all(
 				imagesBase64Strs.map(async (imgBase64Str) => {
 					const imgEl = new Image();
 					imgEl.src = `data:image/png;base64, ${imgBase64Str}`;
@@ -133,22 +134,22 @@
 			isShowSketch = true;
 			let i = 0;
 			imageTs = performance.now();
-			drawImage(imgEls[i % imgEls.length]);
+			drawImage(outputImgs[i % outputImgs.length]);
 			drawNextImage = () => {
 				if (interval) {
 					clearInterval(interval);
 				}
 				imageTs = performance.now();
 				i = i + 1;
-				drawImage(imgEls[i % imgEls.length]);
+				drawImage(outputImgs[i % outputImgs.length]);
 			};
 			interval = setInterval(() => {
 				i = i + 1;
 				imageTs = performance.now();
-				drawImage(imgEls[i % imgEls.length]);
+				drawImage(outputImgs[i % outputImgs.length]);
 			}, 2500);
 
-			if (!isOutputControlAdded && imgEls.length > 1) {
+			if (!isOutputControlAdded && outputImgs.length > 1) {
 				addOutputControl();
 			}
 		} catch (err) {
