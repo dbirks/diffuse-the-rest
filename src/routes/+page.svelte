@@ -75,6 +75,7 @@
 	}
 
 	async function submitRequest() {
+		try {
 		if (!txt) {
 			return alert('Please add prompt');
 		}
@@ -97,7 +98,6 @@
 		form.append('strength', '0.85');
 		form.append('image', imgFile);
 
-		try {
 			const response = await fetch('https://sdb.pcuenca.net/i2i', {
 				method: 'POST',
 				body: form
