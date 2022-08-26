@@ -245,8 +245,6 @@
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
-		copySketch();
-
 		canvas.ondragover = function (e) {
 			e.preventDefault();
 			return false;
@@ -270,7 +268,7 @@
 
 <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center my-8">
 	<canvas
-		class="border-[1.2px] desktop:mt-[34px] {!isShowSketch && false ? 'hidden' : ''}"
+		class="border-[1.2px] desktop:mt-[34px] {!isShowSketch ? 'hidden' : ''}"
 		bind:this={sketchEl}
 	/>
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
