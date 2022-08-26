@@ -208,6 +208,9 @@
 	}
 
 	async function drawUploadedImg(file: File) {
+		if(interval){
+			clearInterval(interval);
+		}
 		const imgEl = new Image();
 		imgEl.src = URL.createObjectURL(file);
 		// await image.onload
