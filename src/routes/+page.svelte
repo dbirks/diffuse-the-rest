@@ -204,6 +204,7 @@
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
+		copySketch();
 	});
 </script>
 
@@ -220,7 +221,10 @@
 </svelte:head>
 
 <div bind:this={containerEl} class="flex flex-wrap gap-x-4 gap-y-2 justify-center my-8">
-	<canvas class="border-2 {!isShowSketch ? 'hidden' : ''}" bind:this={sketchEl} />
+	<canvas
+		class="border-[1.2px] desktop:mt-[34px] {!isShowSketch && false ? 'hidden' : ''}"
+		bind:this={sketchEl}
+	/>
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
 		<div id="board-container" bind:this={canvasContainerEl} />
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
