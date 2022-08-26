@@ -379,7 +379,7 @@
 		
 		Powered by [🤗 Diffusers: State-of-the-art diffusion models for image and audio generation in PyTorch](https://github.com/huggingface/diffusers). Based on [notebook by @psuraj28](https://twitter.com/psuraj28/status/1562039265126670339)
 		
-		Also, be sure to check out [Stable Diffusion Gradio demo](https://huggingface.co/spaces/stabilityai/stable-diffusion)
+		Check out [Stable Diffusion Gradio demo](https://huggingface.co/spaces/stabilityai/stable-diffusion)
 	</div>
 
 ### LICENSE
