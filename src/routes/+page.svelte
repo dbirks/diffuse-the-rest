@@ -93,7 +93,7 @@
 		const { imgFile, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
 		form.append('prompt', txt);
-		form.append('strength', "0.85");
+		form.append('strength', '0.85');
 		form.append('image', imgFile);
 
 		try {
@@ -149,7 +149,7 @@
 			}, 2500);
 
 			if (!isOutputControlAdded && imgEls.length > 1) {
-				addOutputControls();
+				addOutputControl();
 			}
 		} catch (err) {
 			console.error(err);
@@ -157,7 +157,7 @@
 		}
 	}
 
-	function addOutputControls() {
+	function addOutputControl() {
 		const div = document.createElement('div');
 		div.className = 'drawing-board-control';
 
@@ -175,6 +175,23 @@
 					clearInterval(interval);
 				}
 			};
+		}
+	}
+
+	function addClearCanvasControl() {
+		const div = document.createElement('div');
+		div.className = 'drawing-board-control';
+
+		const btn = document.createElement('button');
+		btn.innerHTML = '🧹';
+		btn.onclick = () => {
+			ctx?.clearRect(0, 0, canvasSize, canvasSize);
+		};
+		div.append(btn);
+
+		const controlsEl = document.querySelector('.drawing-board-controls');
+		if (controlsEl) {
+			controlsEl.appendChild(div);
 		}
 	}
 
@@ -250,6 +267,7 @@
 			e.preventDefault();
 			return false;
 		};
+		addClearCanvasControl();
 	});
 </script>
 
@@ -284,7 +302,9 @@
 					diffuse the f rest
 				</button>
 			</div>
-			<p class="no-hover:hidden mt-2 opacity-50">pro tip: upload img by pasting OR dropping on the canvas</p>
+			<p class="no-hover:hidden mt-2 opacity-50">
+				pro tip: upload img by pasting OR dropping on the canvas
+			</p>
 			<div class="mt-1">
 				<label class="with-hover:hidden border py-1 px-1.5 bg-slate-200 cursor-pointer">
 					<input
