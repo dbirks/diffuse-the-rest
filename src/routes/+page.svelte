@@ -149,7 +149,7 @@
 				drawImage(outputImgs[i % outputImgs.length]);
 			}, 2500);
 
-			if (!isOutputControlAdded && outputImgs.length > 1) {
+			if (!isOutputControlAdded) {
 				addOutputControl();
 			}
 		} catch (err) {
@@ -168,7 +168,7 @@
 		div.append(btn);
 
 		const controlsEl = document.querySelector('.drawing-board-controls');
-		if (controlsEl) {
+		if (controlsEl && outputImgs.length > 1) {
 			controlsEl.appendChild(div);
 			isOutputControlAdded = true;
 			canvasContainerEl.onclick = () => {
