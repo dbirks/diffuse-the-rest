@@ -1,11 +1,11 @@
 {
   "node_modules/@sveltejs/kit/src/runtime/client/start.js": {
-    "file": "_app/immutable/start-5917ddf7.js",
+    "file": "_app/immutable/start-91071509.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/client/start.js",
     "isEntry": true,
     "imports": [
       "_index-c0a82f06.js",
-      "_singletons-ef738c91.js"
+      "_singletons-faea4f3a.js"
     ],
     "dynamicImports": [
       ".svelte-kit/generated/nodes/0.js",
@@ -21,16 +21,16 @@
       "_index-c0a82f06.js"
     ],
     "css": [
-      "_app/immutable/assets/+layout-eb6ac278.css"
+      "_app/immutable/assets/+layout-9b8f571c.css"
     ]
   },
   "node_modules/@sveltejs/kit/src/runtime/components/error.svelte": {
-    "file": "_app/immutable/components/error.svelte-b624b455.js",
+    "file": "_app/immutable/components/error.svelte-dd6bf678.js",
     "src": "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
     "isEntry": true,
     "imports": [
       "_index-c0a82f06.js",
-      "_singletons-ef738c91.js"
+      "_singletons-faea4f3a.js"
     ]
   },
   "src/routes/+page.svelte": {
@@ -41,8 +41,8 @@
       "_index-c0a82f06.js"
     ]
   },
-  "_singletons-ef738c91.js": {
-    "file": "_app/immutable/chunks/singletons-ef738c91.js",
+  "_singletons-faea4f3a.js": {
+    "file": "_app/immutable/chunks/singletons-faea4f3a.js",
     "imports": [
       "_index-c0a82f06.js"
     ]
@@ -60,13 +60,13 @@
     ]
   },
   ".svelte-kit/generated/nodes/1.js": {
-    "file": "_app/immutable/chunks/1-d81ef54d.js",
+    "file": "_app/immutable/chunks/1-c1311f60.js",
     "src": ".svelte-kit/generated/nodes/1.js",
     "isDynamicEntry": true,
     "imports": [
       "node_modules/@sveltejs/kit/src/runtime/components/error.svelte",
       "_index-c0a82f06.js",
-      "_singletons-ef738c91.js"
+      "_singletons-faea4f3a.js"
     ]
   },
   ".svelte-kit/generated/nodes/2.js": {
@@ -79,7 +79,7 @@
     ]
   },
   "src/routes/+layout.css": {
-    "file": "_app/immutable/assets/+layout-eb6ac278.css",
+    "file": "_app/immutable/assets/+layout-9b8f571c.css",
     "src": "src/routes/+layout.css"
   }
 }
