@@ -7,7 +7,7 @@ module.exports = {
 			sm: '640px',
 			md: '768px',
 			lg: '1024px',
-			xl: '1280px',
+			xl: '1280px'
 		},
 		extend: {
 			screens: {
@@ -16,5 +16,5 @@ module.exports = {
 			}
 		}
 	},
-	plugins: [require('@tailwindcss/typography'),]
+	plugins: [require('@tailwindcss/typography')]
 };
