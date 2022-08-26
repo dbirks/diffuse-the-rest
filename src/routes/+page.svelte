@@ -306,7 +306,7 @@
 			<p class="no-hover:hidden mt-2 opacity-50">
 				pro tip: upload img by pasting OR dropping on the canvas
 			</p>
-			<div class="mt-1">
+			<div class="mt-2">
 				<label class="with-hover:hidden border py-1 px-1.5 bg-slate-200 cursor-pointer">
 					<input
 						accept="image/*"
