@@ -94,12 +94,12 @@
 		form.append('prompt', txt);
 		form.append('image', imgFile);
 
-		const response = await fetch('https://sdb.pcuenca.net/i2i', {
-			method: 'POST',
-			body: form
-		});
-
 		try {
+			const response = await fetch('https://sdb.pcuenca.net/i2i', {
+				method: 'POST',
+				body: form
+			});
+
 			const json = JSON.parse(await response.text());
 
 			const { images: imagesBase64Strs }: { images: string[] } = json;
