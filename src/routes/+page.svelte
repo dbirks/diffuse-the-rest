@@ -188,18 +188,45 @@
 		context!.drawImage(canvas, 0, 0);
 	}
 
-	async function onChange() {
+	async function drawUploadedImg(file: File) {
+		const imgEl = new Image();
+		imgEl.src = URL.createObjectURL(file);
+		// await image.onload
+		await new Promise((resolve, _) => {
+			imgEl.onload = () => resolve(imgEl);
+		});
+		const { width, height } = imgEl;
+		ctx?.drawImage(imgEl, 0, 0, width, height, 0, 0, canvasSize, canvasSize);
+	}
+
+	function onfImgUpload() {
 		const file = fileInput.files?.[0];
 		if (file) {
-			const imgEl = new Image();
-			imgEl.src = URL.createObjectURL(file);
-			// await image.onload
-			await new Promise((resolve, _) => {
-				imgEl.onload = () => resolve(imgEl);
-			});
-			const { width, height } = imgEl;
-			ctx?.drawImage(imgEl, 0, 0, width, height, 0, 0, canvasSize, canvasSize);
+			drawUploadedImg(file);
 		}
+	}
+
+	function handleDrop(e: DragEvent) {
+		if (!e.dataTransfer?.files) {
+			return;
+		}
+		e.preventDefault();
+		const files = Array.from(e.dataTransfer.files);
+		const file = files[0];
+		drawUploadedImg(file);
+	}
+
+	function handlePaste(e: ClipboardEvent) {
+		if (!e.clipboardData) {
+			return;
+		}
+		const files = Array.from(e.clipboardData.files);
+		if (files.length === 0) {
+			return;
+		}
+		e.preventDefault();
+		const file = files[0];
+		drawUploadedImg(file);
 	}
 
 	onMount(async () => {
@@ -213,8 +240,6 @@
 		drawingBoard = new window.DrawingBoard.Board('board-container', {
 			size: 10,
 			controls: ['Color', { Size: { type: 'dropdown' } }, { DrawingMode: { filler: false } }],
-			droppable: true,
-			stretchImg: true,
 			webStorage: false,
 			enlargeYourContainer: true
 		});
@@ -222,7 +247,10 @@
 		ctx = canvas.getContext('2d');
 		copySketch();
 
-		console.log(drawingBoard._onCanvasDrop);
+		canvas.ondragover = function (e) {
+			e.preventDefault();
+			return false;
+		};
 	});
 </script>
 
@@ -237,6 +265,8 @@
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.contentWindow.min.js"></script>
 </svelte:head>
+
+<svelte:window on:drop|preventDefault|stopPropagation={handleDrop} on:paste={handlePaste} />
 
 <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center my-8">
 	<canvas
@@ -261,7 +291,7 @@
 					<input
 						accept="image/*"
 						bind:this={fileInput}
-						on:change={onChange}
+						on:change={onfImgUpload}
 						style="display: none;"
 						type="file"
 					/>
