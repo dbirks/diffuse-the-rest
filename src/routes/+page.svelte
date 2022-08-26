@@ -285,9 +285,9 @@
 					diffuse the f rest
 				</button>
 			</div>
-			<p class="with-hover:hidden mt-2 opacity-50">pro tip: upload img by dropping on the canvas</p>
+			<p class="no-hover:hidden mt-2 opacity-50">pro tip: upload img by pasting OR dropping on the canvas</p>
 			<div class="mt-1">
-				<label class="border py-1 px-1.5 bg-slate-200 cursor-pointer">
+				<label class="with-hover:hidden border py-1 px-1.5 bg-slate-200 cursor-pointer">
 					<input
 						accept="image/*"
 						bind:this={fileInput}
