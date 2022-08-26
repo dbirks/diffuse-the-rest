@@ -128,8 +128,6 @@
 				})
 			)) as CanvasImageSource[];
 
-			isLoading = false;
-
 			isShowSketch = true;
 			let i = 0;
 			imageTs = performance.now();
@@ -154,6 +152,8 @@
 		} catch (err) {
 			console.error(err);
 			alert('Error happened, queue might be full. Please try again in a bit :)');
+		} finally{
+			isLoading = false;
 		}
 	}
 
