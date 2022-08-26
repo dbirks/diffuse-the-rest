@@ -251,6 +251,13 @@
 		drawUploadedImg(file);
 	}
 
+	function onKeyDown(e: KeyboardEvent) {
+		if (e.code === 'Enter') {
+			e.preventDefault();
+			submitRequest();
+		}
+	}
+
 	// original: https://gist.github.com/MonsieurV/fb640c29084c171b4444184858a91bc7
 	function polyfillCreateImageBitmap() {
 		window.createImageBitmap = async function (data: ImageData): Promise<ImageBitmap> {
@@ -320,7 +327,13 @@
 		<div id="board-container" bind:this={canvasContainerEl} />
 		<div>
 			<div class="flex gap-x-2 mt-3 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
-				<input type="text" class="border-2 py-1" placeholder="Add prompt" bind:value={txt} />
+				<input
+					type="text"
+					class="border-2 py-1"
+					placeholder="Add prompt"
+					on:keydown={onKeyDown}
+					bind:value={txt}
+				/>
 				<button
 					on:click={submitRequest}
 					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4"
