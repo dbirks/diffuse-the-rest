@@ -93,6 +93,7 @@
 		const { imgFile, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
 		form.append('prompt', txt);
+		form.append('strength', "0.85");
 		form.append('image', imgFile);
 
 		try {
