@@ -147,7 +147,7 @@
 				drawImage(imgEls[i % imgEls.length]);
 			}, 2500);
 
-			if (!isOutputControlAdded) {
+			if (!isOutputControlAdded && imgEls.length > 1) {
 				addOutputControls();
 			}
 		} catch (err) {
