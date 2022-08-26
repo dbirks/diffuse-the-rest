@@ -15,6 +15,7 @@
 	const animNoiseDuration = 3000 as const;
 	let canvasSize = 400;
 	let containerEl: HTMLDivElement;
+	let canvasContainerEl: HTMLDivElement;
 	let sketchEl: HTMLCanvasElement;
 	let isShowSketch = false;
 
@@ -161,7 +162,7 @@
 		if (controlsEl) {
 			controlsEl.appendChild(div);
 			isOutputControlAdded = true;
-			containerEl.onclick = () => {
+			canvasContainerEl.onclick = () => {
 				if (interval) {
 					clearInterval(interval);
 				}
@@ -183,8 +184,8 @@
 	onMount(async () => {
 		const { innerWidth: windowWidth } = window;
 		canvasSize = Math.min(canvasSize, Math.floor(windowWidth * 0.75));
-		containerEl.style.width = `${canvasSize}px`;
-		containerEl.style.height = `${canvasSize}px`;
+		canvasContainerEl.style.width = `${canvasSize}px`;
+		canvasContainerEl.style.height = `${canvasSize}px`;
 		sketchEl.style.width = `${canvasSize}px`;
 		sketchEl.style.height = `${canvasSize}px`;
 		await tick();
@@ -197,6 +198,8 @@
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
+		await tick();
+		containerEl?.scrollIntoView({ behavior: 'smooth' });
 	});
 </script>
 
@@ -208,13 +211,14 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/drawingboard.js/0.4.2/drawingboard.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.contentWindow.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.contentWindow.min.js"></script>
 </svelte:head>
 
-<div class="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-8">
+<div bind:this={containerEl} class="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-8">
 	<canvas class="border-2 {!isShowSketch ? 'hidden' : ''}" bind:this={sketchEl} />
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
-		<div id="board-container" bind:this={containerEl} />
+		<div id="board-container" bind:this={canvasContainerEl} />
 		<div class="flex gap-x-2 mt-4 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
 			<input type="text" class="border-2 " placeholder="Add prompt" bind:value={txt} />
 			<button
