@@ -277,6 +277,13 @@
 		};
 	}
 
+	function makeLinksTargetBlank(){
+		const linkEls = document.querySelectorAll("a");
+		for(const linkEl of linkEls){
+			linkEl.target = "_blank";
+		}
+	}
+
 	onMount(async () => {
 		if (typeof createImageBitmap === 'undefined') {
 			polyfillCreateImageBitmap();
@@ -301,6 +308,7 @@
 			return false;
 		};
 		addClearCanvasControl();
+		makeLinksTargetBlank();
 	});
 </script>
 
