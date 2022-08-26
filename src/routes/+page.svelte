@@ -75,7 +75,6 @@
 	}
 
 	async function submitRequest() {
-		try {
 		if (!txt) {
 			return alert('Please add prompt');
 		}
@@ -98,6 +97,7 @@
 		form.append('strength', '0.85');
 		form.append('image', imgFile);
 
+		try {
 			const response = await fetch('https://sdb.pcuenca.net/i2i', {
 				method: 'POST',
 				body: form
@@ -208,7 +208,7 @@
 	}
 
 	async function drawUploadedImg(file: File) {
-		if(interval){
+		if (interval) {
 			clearInterval(interval);
 		}
 		const imgEl = new Image();
@@ -251,8 +251,29 @@
 		drawUploadedImg(file);
 	}
 
+	// original: https://gist.github.com/MonsieurV/fb640c29084c171b4444184858a91bc7
+	function polyfillCreateImageBitmap() {
+		window.createImageBitmap = async function (data: ImageData): Promise<ImageBitmap> {
+			return new Promise((resolve, _) => {
+				const canvas = document.createElement('canvas');
+				const ctx = canvas.getContext('2d');
+				canvas.width = data.width;
+				canvas.height = data.height;
+				ctx.putImageData(data, 0, 0);
+				const dataURL = canvas.toDataURL();
+				const img = document.createElement('img');
+				img.addEventListener('load', () => {
+					resolve(img as any as ImageBitmap);
+				});
+				img.src = dataURL;
+			});
+		};
+	}
+
 	onMount(async () => {
-		console.log("ONMOUNT svelte")
+		if (typeof createImageBitmap === 'undefined') {
+			polyfillCreateImageBitmap();
+		}
 		const { innerWidth: windowWidth } = window;
 		canvasSize = Math.min(canvasSize, Math.floor(windowWidth * 0.75));
 		canvasContainerEl.style.width = `${canvasSize}px`;
