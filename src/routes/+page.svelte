@@ -363,9 +363,12 @@
 
 <article class="prose-sm px-24 mb-8">
 
-Model by [CompVis](https://huggingface.co/CompVis) and [Stability AI](https://huggingface.co/stabilityai) - Demo by 🤗 Hugging Face
+	<div class="text-center">
 
-Powered by [🤗 Diffusers: State-of-the-art diffusion models for image and audio generation in PyTorch](https://github.com/huggingface/diffusers). Based on [notebook by @psuraj28](https://twitter.com/psuraj28/status/1562039265126670339)
+		Model by [CompVis](https://huggingface.co/CompVis) and [Stability AI](https://huggingface.co/stabilityai) - Demo by 🤗 Hugging Face
+		
+		Powered by [🤗 Diffusers: State-of-the-art diffusion models for image and audio generation in PyTorch](https://github.com/huggingface/diffusers). Based on [notebook by @psuraj28](https://twitter.com/psuraj28/status/1562039265126670339)
+	</div>
 
 ### LICENSE
 The model is licensed with a [CreativeML Open RAIL-M](https://huggingface.co/spaces/CompVis/stable-diffusion-license) license. The authors claim no rights on the outputs you generate, you are free to use them and are accountable for their use which must not go against the provisions set in this license. The license forbids you from sharing any content that violates any laws, produce any harm to a person, disseminate any personal information that would be meant for harm, spread misinformation and target vulnerable groups. For the full list of restrictions please [read the license](https://huggingface.co/spaces/CompVis/stable-diffusion-license)
