@@ -371,27 +371,19 @@
 </div>
 
 <article class="prose-sm px-4 md:px-8 lg:px-24 mb-8">
+
 	<div class="text-center">
-		Stable Diffusion model by [CompVis](https://huggingface.co/CompVis) and [Stability
-		AI](https://huggingface.co/stabilityai) - Demo by 🤗 Hugging Face Powered by [🤗 Diffusers:
-		State-of-the-art diffusion models for image and audio generation in
-		PyTorch](https://github.com/huggingface/diffusers). Based on [notebook by
-		@psuraj28](https://twitter.com/psuraj28/status/1562039265126670339) Check out [Stable Diffusion
-		Gradio demo](https://huggingface.co/spaces/stabilityai/stable-diffusion)
+
+		Stable Diffusion model by [CompVis](https://huggingface.co/CompVis) and [Stability AI](https://huggingface.co/stabilityai) - Demo by 🤗 Hugging Face
+		
+		Powered by [🤗 Diffusers: State-of-the-art diffusion models for image and audio generation in PyTorch](https://github.com/huggingface/diffusers). Based on [notebook by @psuraj28](https://twitter.com/psuraj28/status/1562039265126670339)
+		
+		Check out [Stable Diffusion Gradio demo](https://huggingface.co/spaces/stabilityai/stable-diffusion)
 	</div>
 
-	### LICENSE The model is licensed with a [CreativeML Open
-	RAIL-M](https://huggingface.co/spaces/CompVis/stable-diffusion-license) license. The authors claim
-	no rights on the outputs you generate, you are free to use them and are accountable for their use
-	which must not go against the provisions set in this license. The license forbids you from sharing
-	any content that violates any laws, produce any harm to a person, disseminate any personal
-	information that would be meant for harm, spread misinformation and target vulnerable groups. For
-	the full list of restrictions please [read the
-	license](https://huggingface.co/spaces/CompVis/stable-diffusion-license) ### Biases and content
-	acknowledgment Despite how impressive being able to turn text into image is, beware to the fact
-	that this model may output content that reinforces or exacerbates societal biases, as well as
-	realistic faces, pornography and violence. The model was trained on the [LAION-5B
-	dataset](https://laion.ai/blog/laion-5b/), which scraped non-curated image-text-pairs from the
-	internet (the exception being the removal of illegal content) and is meant for research purposes.
-	You can read more in the [model card](https://huggingface.co/CompVis/stable-diffusion-v1-4)
+### LICENSE
+The model is licensed with a [CreativeML Open RAIL-M](https://huggingface.co/spaces/CompVis/stable-diffusion-license) license. The authors claim no rights on the outputs you generate, you are free to use them and are accountable for their use which must not go against the provisions set in this license. The license forbids you from sharing any content that violates any laws, produce any harm to a person, disseminate any personal information that would be meant for harm, spread misinformation and target vulnerable groups. For the full list of restrictions please [read the license](https://huggingface.co/spaces/CompVis/stable-diffusion-license)
+
+### Biases and content acknowledgment
+Despite how impressive being able to turn text into image is, beware to the fact that this model may output content that reinforces or exacerbates societal biases, as well as realistic faces, pornography and violence. The model was trained on the [LAION-5B dataset](https://laion.ai/blog/laion-5b/), which scraped non-curated image-text-pairs from the internet (the exception being the removal of illegal content) and is meant for research purposes. You can read more in the [model card](https://huggingface.co/CompVis/stable-diffusion-v1-4)
 </article>
