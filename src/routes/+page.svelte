@@ -361,7 +361,7 @@
 </div>
 
 
-<article class="prose-sm px-24">
+<article class="prose-sm px-24 mb-8">
 
 Model by [CompVis](https://huggingface.co/CompVis) and [Stability AI](https://huggingface.co/stabilityai) - Demo by 🤗 Hugging Face
 
