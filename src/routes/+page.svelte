@@ -4,6 +4,7 @@
 	let txt = '';
 	let isLoading = false;
 	let isOutputControlAdded = false;
+	let drawingBoard: any;
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D | null;
 	let noiseTs: DOMHighResTimeStamp;
@@ -14,7 +15,6 @@
 	const animImageDuration = 500 as const;
 	const animNoiseDuration = 3000 as const;
 	let canvasSize = 400;
-	let containerEl: HTMLDivElement;
 	let canvasContainerEl: HTMLDivElement;
 	let fileInput: HTMLInputElement;
 	let sketchEl: HTMLCanvasElement;
@@ -188,11 +188,17 @@
 		context!.drawImage(canvas, 0, 0);
 	}
 
-	function onChange() {
+	async function onChange() {
 		const file = fileInput.files?.[0];
 		if (file) {
-			// todo: upload file
-			// onSelectFile(file);
+			const imgEl = new Image();
+			imgEl.src = URL.createObjectURL(file);
+			// await image.onload
+			await new Promise((resolve, _) => {
+				imgEl.onload = () => resolve(imgEl);
+			});
+			const { width, height } = imgEl;
+			ctx?.drawImage(imgEl, 0, 0, width, height, 0, 0, canvasSize, canvasSize);
 		}
 	}
 
@@ -204,16 +210,19 @@
 		sketchEl.style.width = `${canvasSize}px`;
 		sketchEl.style.height = `${canvasSize}px`;
 		await tick();
-		const drawingBoard = new window.DrawingBoard.Board('board-container', {
+		drawingBoard = new window.DrawingBoard.Board('board-container', {
 			size: 10,
 			controls: ['Color', { Size: { type: 'dropdown' } }, { DrawingMode: { filler: false } }],
 			droppable: true,
+			stretchImg: true,
 			webStorage: false,
 			enlargeYourContainer: true
 		});
 		canvas = drawingBoard.canvas;
 		ctx = canvas.getContext('2d');
 		copySketch();
+
+		console.log(drawingBoard._onCanvasDrop);
 	});
 </script>
 
@@ -229,7 +238,7 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.contentWindow.min.js"></script>
 </svelte:head>
 
-<div bind:this={containerEl} class="flex flex-wrap gap-x-4 gap-y-2 justify-center my-8">
+<div class="flex flex-wrap gap-x-4 gap-y-2 justify-center my-8">
 	<canvas
 		class="border-[1.2px] desktop:mt-[34px] {!isShowSketch && false ? 'hidden' : ''}"
 		bind:this={sketchEl}
