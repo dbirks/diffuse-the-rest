@@ -208,6 +208,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/drawingboard.js/0.4.2/drawingboard.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.contentWindow.min.js"></script>
 </svelte:head>
 
 <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center mt-8">
