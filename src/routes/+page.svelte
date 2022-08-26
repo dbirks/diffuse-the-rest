@@ -22,6 +22,7 @@
 	const animNoiseDuration = 3000 as const;
 
 	async function drawNoise() {
+		return;
 		if (!ctx) {
 			return;
 		}
