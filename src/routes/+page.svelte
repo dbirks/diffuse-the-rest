@@ -259,7 +259,7 @@
 				const ctx = canvas.getContext('2d');
 				canvas.width = data.width;
 				canvas.height = data.height;
-				ctx.putImageData(data, 0, 0);
+				ctx!.putImageData(data, 0, 0);
 				const dataURL = canvas.toDataURL();
 				const img = document.createElement('img');
 				img.addEventListener('load', () => {
