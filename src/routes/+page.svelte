@@ -351,11 +351,8 @@
 					diffuse the f rest
 				</button>
 			</div>
-			<p class="hidden desktop:inline mt-2 opacity-50">
-				pro tip: upload img by dropping on the canvas
-			</p>
-			<div class="mt-2">
-				<label class="inline desktop:hidden border py-1 px-1.5 bg-slate-200 cursor-pointer">
+			<div class="mt-4">
+				<label class="inline border py-1 px-1.5 bg-slate-200 cursor-pointer">
 					<input
 						accept="image/*"
 						bind:this={fileInput}
@@ -365,6 +362,9 @@
 					/>
 					upload img
 				</label>
+				<p class="hidden desktop:inline mt-2 opacity-50">
+					pro tip: upload img by dropping on the canvas
+				</p>
 			</div>
 		</div>
 	</div>
