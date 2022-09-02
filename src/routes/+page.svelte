@@ -127,6 +127,7 @@
 					return imgEl;
 				})
 			)) as CanvasImageSource[];
+			outputImgs.push(initialSketchBitmap);
 
 			isShowSketch = true;
 			let i = 0;
@@ -188,6 +189,30 @@
 			ctx?.clearRect(0, 0, canvasSize, canvasSize);
 			outputImgs = [];
 			isShowSketch = false;
+		};
+		div.append(btn);
+
+		const controlsEl = document.querySelector('.drawing-board-controls');
+		if (controlsEl) {
+			controlsEl.appendChild(div);
+		}
+	}
+
+	function addDownloadCanvasControl() {
+		const div = document.createElement('div');
+		div.className = 'drawing-board-control';
+
+		const btn = document.createElement('button');
+		btn.innerHTML = '⬇️';
+		btn.onclick = () => {
+			if (!canvas) {
+				return;
+			}
+			const link = document.createElement('a');
+			const imgId = Date.now() % 200;
+			link.download = `diffuse-the-rest-${imgId}.png`;
+			link.href = canvas.toDataURL();
+			link.click();
 		};
 		div.append(btn);
 
@@ -309,6 +334,7 @@
 			return false;
 		};
 		addClearCanvasControl();
+		addDownloadCanvasControl();
 		makeLinksTargetBlank();
 	});
 </script>
@@ -387,3 +413,4 @@ The model is licensed with a [CreativeML Open RAIL-M](https://huggingface.co/spa
 ### Biases and content acknowledgment
 Despite how impressive being able to turn text into image is, beware to the fact that this model may output content that reinforces or exacerbates societal biases, as well as realistic faces, pornography and violence. The model was trained on the [LAION-5B dataset](https://laion.ai/blog/laion-5b/), which scraped non-curated image-text-pairs from the internet (the exception being the removal of illegal content) and is meant for research purposes. You can read more in the [model card](https://huggingface.co/CompVis/stable-diffusion-v1-4)
 </article>
+
