@@ -6,11 +6,11 @@
 		<meta name="viewport" content="width=device-width" />
 		<meta http-equiv="content-security-policy" content=""><link href="https://cdnjs.cloudflare.com/ajax/libs/drawingboard.js/0.4.2/drawingboard.css" rel="stylesheet" data-svelte="svelte-bw39ln"><script src="https://code.jquery.com/jquery-1.12.4.min.js" data-svelte="svelte-bw39ln"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/drawingboard.js/0.4.2/drawingboard.min.js" data-svelte="svelte-bw39ln"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.1/iframeResizer.contentWindow.min.js" data-svelte="svelte-bw39ln"></script>
 	<link href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/assets/+layout-eac3eb59.css" rel="stylesheet">
-	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/start-2998f0c5.js">
-	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/chunks/index-c0a82f06.js">
-	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/chunks/singletons-d71df1eb.js">
-	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/components/pages/_layout.svelte-f3c669c0.js">
-	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/components/pages/_page.svelte-8b43bd2f.js">
+	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/start-c96f65c7.js">
+	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/chunks/index-e7559696.js">
+	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/chunks/singletons-1654a6d5.js">
+	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/components/pages/_layout.svelte-bbfb238b.js">
+	<link rel="modulepreload" href="/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/components/pages/_page.svelte-5469b751.js">
 	</head>
 	<body>
 		<div>
@@ -18,16 +18,11 @@
 
 
 <div class="flex flex-wrap gap-x-4 gap-y-2 justify-center my-8"><canvas class="border-[1.2px] desktop:mt-[34px] hidden"></canvas>
-	<div class="flex flex-col items-center "><div id="board-container"></div>
-		<div><div class="flex gap-x-2 mt-3 items-center justify-center "><input type="text" class="border-2 py-1" placeholder="Add prompt" maxlength="200" value="">
-				<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4">diffuse the f rest
-				</button></div>
-			<div class="mt-4"><label class="inline border py-1 px-1.5 bg-slate-200 cursor-pointer"><input accept="image/*" style="display: none;" type="file">
-					upload img
-				</label>
-				<p class="hidden desktop:inline mt-2 opacity-50">pro tip: upload img by dropping on the canvas
-				</p></div></div></div></div>
-<article class="prose-sm px-4 md:px-12 lg:px-56 mb-8"><div class="text-center"><p>Stable Diffusion model by <a href="https://huggingface.co/CompVis" rel="nofollow">CompVis</a> and <a href="https://huggingface.co/stabilityai" rel="nofollow">Stability AI</a> - Demo by 🤗 Hugging Face</p>
+	<div class="flex flex-col items-center "><div><p>Loading…</p>
+				 <p>█▒▒▒▒▒▒▒▒▒</p></div>
+		<div id="board-container"></div>
+		</div></div>
+<article class="prose-sm px-4 md:px-12 lg:px-56 mb-8 hidden"><div class="text-center"><p>Stable Diffusion model by <a href="https://huggingface.co/CompVis" rel="nofollow">CompVis</a> and <a href="https://huggingface.co/stabilityai" rel="nofollow">Stability AI</a> - Demo by 🤗 Hugging Face</p>
 <p>Powered by <a href="https://github.com/huggingface/diffusers" rel="nofollow">🤗 Diffusers: State-of-the-art diffusion models for image and audio generation in PyTorch</a>. Based on <a href="https://twitter.com/psuraj28/status/1562039265126670339" rel="nofollow">notebook by @psuraj28</a></p>
 <p>Check out <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion" rel="nofollow">Stable Diffusion Gradio demo</a></p></div>
 <h3>LICENSE</h3>
@@ -35,13 +30,13 @@
 <h3>Biases and content acknowledgment</h3>
 <p>Despite how impressive being able to turn text into image is, beware to the fact that this model may output content that reinforces or exacerbates societal biases, as well as realistic faces, pornography and violence. The model was trained on the <a href="https://laion.ai/blog/laion-5b/" rel="nofollow">LAION-5B dataset</a>, which scraped non-curated image-text-pairs from the internet (the exception being the removal of illegal content) and is meant for research purposes. You can read more in the <a href="https://huggingface.co/CompVis/stable-diffusion-v1-4" rel="nofollow">model card</a></p></article>
 
-		<script type="module" data-sveltekit-hydrate="pxnbvh">
-		import { set_public_env, start } from "/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/start-2998f0c5.js";
+		<script type="module" data-sveltekit-hydrate="1kokcf0">
+		import { set_public_env, start } from "/staticspaceiframe/huggingface/diffuse-the-rest/build/_app/immutable/start-c96f65c7.js";
 
 		set_public_env({});
 
 		start({
-			target: document.querySelector('[data-sveltekit-hydrate="pxnbvh"]').parentNode,
+			target: document.querySelector('[data-sveltekit-hydrate="1kokcf0"]').parentNode,
 			paths: {"base":"/staticspaceiframe/huggingface/diffuse-the-rest/build","assets":"/staticspaceiframe/huggingface/diffuse-the-rest/build"},
 			route: true,
 			spa: false,
