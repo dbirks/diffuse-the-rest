@@ -289,6 +289,9 @@
 	}
 
 	function onKeyDown(e: KeyboardEvent) {
+		if(isLoading){
+			return e.preventDefault();
+		}
 		if (e.code === 'Enter') {
 			e.preventDefault();
 			submitRequest();
@@ -379,15 +382,18 @@
 		<div id="board-container" bind:this={canvasContainerEl} />
 		{#if canvas}
 			 <div>
-				 <div class="flex gap-x-2 mt-3 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
-					 <input
-						 type="text"
-						 class="border-2 py-1"
-						 placeholder="Add prompt"
-						 maxlength="200"
-						 on:keydown={onKeyDown}
-						 bind:value={txt}
-					 />
+				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
+					 <span
+						class="overflow-auto resize-y py-2 px-3 min-h-[42px] max-h-[500px] !w-[181px] whitespace-pre-wrap inline-block border border-gray-200 rounded-lg shadow-inner outline-none"
+						role="textbox"
+						contenteditable
+						style="--placeholder: 'Add prompt'"
+						spellcheck="false"
+						dir="auto"
+						maxlength="200"
+						bind:textContent={txt}
+						on:keydown={onKeyDown}
+					/>
 					 <button
 						 on:click={submitRequest}
 						 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4"
@@ -432,3 +438,10 @@ The model is licensed with a [CreativeML Open RAIL-M](https://huggingface.co/spa
 ### Biases and content acknowledgment
 Despite how impressive being able to turn text into image is, beware to the fact that this model may output content that reinforces or exacerbates societal biases, as well as realistic faces, pornography and violence. The model was trained on the [LAION-5B dataset](https://laion.ai/blog/laion-5b/), which scraped non-curated image-text-pairs from the internet (the exception being the removal of illegal content) and is meant for research purposes. You can read more in the [model card](https://huggingface.co/CompVis/stable-diffusion-v1-4)
 </article>
+
+<style>
+	span[contenteditable]:empty::before {
+		content: var(--placeholder);
+		color: rgba(156, 163, 175);
+	}
+</style>
