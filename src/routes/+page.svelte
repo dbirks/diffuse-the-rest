@@ -396,7 +396,7 @@
 	</div>
 </div>
 
-<article class="prose-sm px-4 md:px-8 lg:px-24 mb-8">
+<article class="prose-sm px-4 md:px-12 lg:px-56 mb-8">
 
 	<div class="text-center">
 
