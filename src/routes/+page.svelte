@@ -370,44 +370,52 @@
 		bind:this={sketchEl}
 	/>
 	<div class="flex flex-col items-center {isLoading ? 'pointer-events-none' : ''}">
+		{#if !canvas}
+			 <div>
+				 <p>Loading…</p>
+				 <p>█▒▒▒▒▒▒▒▒▒</p>
+			 </div>
+		{/if}
 		<div id="board-container" bind:this={canvasContainerEl} />
-		<div>
-			<div class="flex gap-x-2 mt-3 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
-				<input
-					type="text"
-					class="border-2 py-1"
-					placeholder="Add prompt"
-					maxlength="200"
-					on:keydown={onKeyDown}
-					bind:value={txt}
-				/>
-				<button
-					on:click={submitRequest}
-					class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4"
-				>
-					diffuse the f rest
-				</button>
-			</div>
-			<div class="mt-4">
-				<label class="inline border py-1 px-1.5 bg-slate-200 cursor-pointer">
-					<input
-						accept="image/*"
-						bind:this={fileInput}
-						on:change={onfImgUpload}
-						style="display: none;"
-						type="file"
-					/>
-					upload img
-				</label>
-				<p class="hidden desktop:inline mt-2 opacity-50">
-					pro tip: upload img by dropping on the canvas
-				</p>
-			</div>
-		</div>
+		{#if canvas}
+			 <div>
+				 <div class="flex gap-x-2 mt-3 items-center justify-center {isLoading ? 'animate-pulse' : ''}">
+					 <input
+						 type="text"
+						 class="border-2 py-1"
+						 placeholder="Add prompt"
+						 maxlength="200"
+						 on:keydown={onKeyDown}
+						 bind:value={txt}
+					 />
+					 <button
+						 on:click={submitRequest}
+						 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4"
+					 >
+						 diffuse the f rest
+					 </button>
+				 </div>
+				 <div class="mt-4">
+					 <label class="inline border py-1 px-1.5 bg-slate-200 cursor-pointer">
+						 <input
+							 accept="image/*"
+							 bind:this={fileInput}
+							 on:change={onfImgUpload}
+							 style="display: none;"
+							 type="file"
+						 />
+						 upload img
+					 </label>
+					 <p class="hidden desktop:inline mt-2 opacity-50">
+						 pro tip: upload img by dropping on the canvas
+					 </p>
+				 </div>
+			 </div>
+		{/if}
 	</div>
 </div>
 
-<article class="prose-sm px-4 md:px-12 lg:px-56 mb-8">
+<article class="prose-sm px-4 md:px-12 lg:px-56 mb-8 {!canvas ? 'hidden' : ''}">
 
 	<div class="text-center">
 
