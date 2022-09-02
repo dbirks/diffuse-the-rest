@@ -244,7 +244,18 @@
 			imgEl.onload = () => resolve(imgEl);
 		});
 		const { width, height } = imgEl;
-		ctx?.drawImage(imgEl, 0, 0, width, height, 0, 0, canvasSize, canvasSize);
+		// keep aspect ratio
+		if (width == height) {
+			ctx?.drawImage(imgEl, 0, 0, width, height, 0, 0, canvasSize, canvasSize);
+		} else if (width > height) {
+			const canvasHeight = Math.floor((canvasSize * height) / width);
+			const padding = Math.floor((canvasSize - canvasHeight) / 2);
+			ctx?.drawImage(imgEl, 0, 0, width, height, 0, padding, canvasSize, canvasHeight);
+		} else {
+			const canvasWidth = Math.floor((canvasSize * width) / height);
+			const padding = Math.floor((canvasSize - canvasWidth) / 2);
+			ctx?.drawImage(imgEl, 0, 0, width, height, padding, 0, canvasWidth, canvasSize);
+		}
 	}
 
 	function onfImgUpload() {
@@ -413,4 +424,3 @@ The model is licensed with a [CreativeML Open RAIL-M](https://huggingface.co/spa
 ### Biases and content acknowledgment
 Despite how impressive being able to turn text into image is, beware to the fact that this model may output content that reinforces or exacerbates societal biases, as well as realistic faces, pornography and violence. The model was trained on the [LAION-5B dataset](https://laion.ai/blog/laion-5b/), which scraped non-curated image-text-pairs from the internet (the exception being the removal of illegal content) and is meant for research purposes. You can read more in the [model card](https://huggingface.co/CompVis/stable-diffusion-v1-4)
 </article>
-
