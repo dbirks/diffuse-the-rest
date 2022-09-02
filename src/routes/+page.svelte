@@ -384,7 +384,7 @@
 			 <div>
 				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <span
-						class="overflow-auto resize-y py-2 px-3 min-h-[42px] max-h-[500px] !w-[181px] whitespace-pre-wrap inline-block border border-gray-200 rounded-lg shadow-inner outline-none"
+						class="overflow-auto resize-y py-2 px-3 min-h-[42px] max-h-[500px] !w-[181px] whitespace-pre-wrap inline-block border border-gray-200 shadow-inner outline-none"
 						role="textbox"
 						contenteditable
 						style="--placeholder: 'Add prompt'"
@@ -396,7 +396,7 @@
 					/>
 					 <button
 						 on:click={submitRequest}
-						 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1.5 px-4"
+						 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-[0.555rem] px-4"
 					 >
 						 diffuse the f rest
 					 </button>
