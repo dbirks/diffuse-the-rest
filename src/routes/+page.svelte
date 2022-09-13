@@ -2,6 +2,7 @@
 	import { onMount, tick } from 'svelte';
 
 	let txt = '';
+	let strength = '0.85';
 	let isLoading = false;
 	let isOutputControlAdded = false;
 	let drawingBoard: any;
@@ -97,7 +98,7 @@
 		const { imgFile, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
 		form.append('prompt', txt);
-		form.append('strength', '0.85');
+		form.append('strength', strength);
 		form.append('image', imgFile);
 
 		try {
@@ -382,6 +383,19 @@
 		<div id="board-container" bind:this={canvasContainerEl} />
 		{#if canvas}
 			 <div>
+				 <div class="flex gap-x-2 mt-3 items-start justify-center align-vertical {isLoading ? 'animate-pulse' : ''}">
+					<p class="font-bold align-middle py-2">Strength:</p>
+					 <span
+						class="overflow-auto resize-y py-2 px-3 min-h-[42px] max-h-[500px] !w-[181px] whitespace-pre-wrap inline-block border border-gray-200 shadow-inner outline-none"
+						role="textbox"
+						contenteditable
+						spellcheck="false"
+						dir="auto"
+						maxlength="200"
+						bind:textContent={strength}
+						on:keydown={onKeyDown}
+					/>
+				 </div>
 				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <span
 						class="overflow-auto resize-y py-2 px-3 min-h-[42px] max-h-[500px] !w-[181px] whitespace-pre-wrap inline-block border border-gray-200 shadow-inner outline-none"
@@ -390,13 +404,13 @@
 						style="--placeholder: 'Add prompt'"
 						spellcheck="false"
 						dir="auto"
-						maxlength="200"
+						maxlength="1000"
 						bind:textContent={txt}
 						on:keydown={onKeyDown}
 					/>
 					 <button
 						 on:click={submitRequest}
-						 class="bg-green-700 hover:bg-green-800 text-white font-bold py-[0.555rem] px-4"
+						 class="bg-green-700 hover:bg-green-800 text-white font-bold py-[0.555rem] px-4 rounded-xl"
 					 >
 						 diffuse 🪄
 					 </button>
