@@ -396,13 +396,13 @@
 					/>
 					 <button
 						 on:click={submitRequest}
-						 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-[0.555rem] px-4"
+						 class="bg-green-700 hover:bg-green-800 text-white font-bold py-[0.555rem] px-4"
 					 >
 						 diffuse 🪄
 					 </button>
 				 </div>
 				 <div class="mt-4">
-					 <label class="inline border py-1 px-1.5 bg-slate-200 cursor-pointer">
+					 <label class="inline border py-2 px-3 bg-slate-200 cursor-pointer">
 						 <input
 							 accept="image/*"
 							 bind:this={fileInput}
