@@ -398,7 +398,7 @@
 						 on:click={submitRequest}
 						 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-[0.555rem] px-4"
 					 >
-						 diffuse the f rest
+						 diffuse
 					 </button>
 				 </div>
 				 <div class="mt-4">
