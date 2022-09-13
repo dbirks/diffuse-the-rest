@@ -424,6 +424,7 @@
 <article class="prose-sm px-4 md:px-12 lg:px-56 mb-8 {!canvas ? 'hidden' : ''}">
 
 	<div class="text-center">
+		Hi Rachel 👋🙂
 
 		Stable Diffusion model by [CompVis](https://huggingface.co/CompVis) and [Stability AI](https://huggingface.co/stabilityai) - Demo by 🤗 Hugging Face
 		
