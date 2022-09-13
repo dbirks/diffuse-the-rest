@@ -3,6 +3,7 @@
 
 	let txt = '';
 	let strength = '0.85';
+	let imagesReturned = '0';
 	let isLoading = false;
 	let isOutputControlAdded = false;
 	let drawingBoard: any;
@@ -110,6 +111,8 @@
 			const json = JSON.parse(await response.text());
 
 			const { images: imagesBase64Strs }: { images: string[] } = json;
+
+			imagesReturned=imagesBase64Strs.length.toString();
 
 			if (!imagesBase64Strs.length) {
 				return alert(
@@ -432,6 +435,11 @@
 					 <p class="hidden desktop:inline mt-2 opacity-50">
 						 pro tip: upload img by dropping on the canvas
 					 </p>
+				 </div>
+				 <div>
+					<p class="my-4">
+						Images returned: {imagesReturned}
+					</p>
 				 </div>
 			 </div>
 		{/if}
