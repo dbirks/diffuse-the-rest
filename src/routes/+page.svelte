@@ -34,7 +34,7 @@
 			pix[i] = 40 * Math.random() * c; // Set a random gray
 			pix[i + 1] = 40 * Math.random() * c; // Set a random gray
 			pix[i + 2] = 40 * Math.random() * c; // Set a random gray
-			pix[i + 3] = 255; // 100% opaque
+			pix[i + 3] = 10; // 10/255th opaque
 		}
 
 		const bitmap = await createImageBitmap(imageData);
