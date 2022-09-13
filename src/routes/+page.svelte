@@ -383,7 +383,7 @@
 		<div id="board-container" bind:this={canvasContainerEl} />
 		{#if canvas}
 			 <div>
-				 <div class="flex gap-x-2 mt-3 items-start justify-center align-vertical {isLoading ? 'animate-pulse' : ''}">
+				 <div class="flex gap-x-2 mt-3 items-start justify-center align-vertical">
 					<p class="font-bold align-middle py-2">Strength:</p>
 					 <span
 						class="overflow-auto resize-y py-2 px-3 min-h-[42px] max-h-[500px] !w-[181px] whitespace-pre-wrap inline-block border border-gray-200 shadow-inner outline-none"
@@ -396,7 +396,8 @@
 						on:keydown={onKeyDown}
 					/>
 				 </div>
-				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
+				 <div class="flex gap-x-2 mt-3 items-start justify-center">
+					<p class="font-bold align-middle py-2">Prompt:</p>
 					 <span
 						class="overflow-auto resize-y py-2 px-3 min-h-[42px] max-h-[500px] !w-[181px] whitespace-pre-wrap inline-block border border-gray-200 shadow-inner outline-none"
 						role="textbox"
@@ -408,6 +409,8 @@
 						bind:textContent={txt}
 						on:keydown={onKeyDown}
 					/>
+				 </div>
+				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <button
 						 on:click={submitRequest}
 						 class="bg-green-700 hover:bg-green-800 text-white font-bold py-[0.555rem] px-4 rounded-xl"
