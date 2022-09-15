@@ -330,7 +330,7 @@
 		// const delay = ms => new Promise(res => setTimeout(res, ms));
 		// await delay(5000);
 		// return "abc.zyx";
-		const UPLOAD_URL = "/uploads";
+		const UPLOAD_URL = "https://huggingface.co/uploads";
 		const response = await fetch(UPLOAD_URL, {
 			method: "POST",
 			headers: {
