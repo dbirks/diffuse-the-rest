@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import ShareWithCommunity from "$lib/ShareWithCommunity.svelte";
 
-	let txt = '';
+	let promptTxt = '';
 	let isLoading = false;
+	let isUploading = false;
 	let isOutputControlAdded = false;
 	let drawingBoard: any;
 	let canvas: HTMLCanvasElement;
@@ -75,7 +77,7 @@
 	}
 
 	async function submitRequest() {
-		if (!txt) {
+		if (!promptTxt) {
 			return alert('Please add prompt');
 		}
 
@@ -96,7 +98,7 @@
 
 		const { imgFile, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
-		form.append('prompt', txt);
+		form.append('prompt', promptTxt);
 		form.append('strength', '0.85');
 		form.append('image', imgFile);
 
@@ -324,6 +326,38 @@
 		}
 	}
 
+	async function uploadFile(file: File): Promise<string> {
+		// const delay = ms => new Promise(res => setTimeout(res, ms));
+		// await delay(5000);
+		// return "abc.zyx";
+		const UPLOAD_URL = "/uploads";
+		const response = await fetch(UPLOAD_URL, {
+			method: "POST",
+			headers: {
+				"Content-Type": file.type,
+				"X-Requested-With": "XMLHttpRequest",
+			},
+			body: file, /// <- File inherits from Blob
+		});
+		const url = await response.text();
+		return url;
+	}
+
+	async function createCommunityPost() {
+		isUploading = true;
+		const { imgFile } = await getCanvasSnapshot(canvas);
+		const url = await uploadFile(imgFile);
+
+		const params = new URLSearchParams({
+			title: promptTxt,
+			description: `![diffuse-the-rest.png](${url})`,
+		});
+
+		const paramsStr = params.toString();
+		window.open(`https://huggingface.co/spaces/huggingface/diffuse-the-rest/discussions/new?${paramsStr}`, '_blank');
+		isUploading = false;
+	}
+
 	onMount(async () => {
 		if (typeof createImageBitmap === 'undefined') {
 			polyfillCreateImageBitmap();
@@ -382,6 +416,9 @@
 		<div id="board-container" bind:this={canvasContainerEl} />
 		{#if canvas}
 			 <div>
+				<div class="w-full flex justify-end">
+					<ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading}/>
+				</div>
 				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <span
 						class="overflow-auto resize-y py-2 px-3 min-h-[42px] max-h-[500px] !w-[181px] whitespace-pre-wrap inline-block border border-gray-200 shadow-inner outline-none"
@@ -391,7 +428,7 @@
 						spellcheck="false"
 						dir="auto"
 						maxlength="200"
-						bind:textContent={txt}
+						bind:textContent={promptTxt}
 						on:keydown={onKeyDown}
 					/>
 					 <button
