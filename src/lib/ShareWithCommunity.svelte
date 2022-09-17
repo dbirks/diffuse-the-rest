@@ -8,6 +8,9 @@
 
 	const dispatch = createEventDispatcher();
     function handleClick(){
+        if(isUploading){
+            return;
+        }
 		dispatch('createCommunityPost');
     }
 </script>
