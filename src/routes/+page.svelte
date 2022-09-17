@@ -19,6 +19,7 @@
 	let sketchEl: HTMLCanvasElement;
 	let isShowSketch = false;
 	let outputImgs: CanvasImageSource[] = [];
+	let outputFiles: {sketch: File, generations: File[]};
 
 	const animImageDuration = 500 as const;
 	const animNoiseDuration = 3000 as const;
@@ -96,11 +97,11 @@
 		noiseTs = performance.now();
 		drawNoise();
 
-		const { imgFile, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
+		const { imgFile: sketch, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
 		form.append('prompt', promptTxt);
 		form.append('strength', '0.85');
-		form.append('image', imgFile);
+		form.append('image', sketch);
 
 		try {
 			const response = await fetch('https://sdb.pcuenca.net/i2i', {
@@ -130,6 +131,20 @@
 				})
 			)) as CanvasImageSource[];
 			outputImgs.push(initialSketchBitmap);
+
+			outputFiles = {
+				sketch,
+				generations: (await Promise.all(
+					imagesBase64Strs.map(async (imgBase64Str) => {
+						const dataUrl = `data:image/png;base64, ${imgBase64Str}`;
+						const res: Response = await fetch(dataUrl);
+						const blob: Blob = await res.blob();
+						const imgId = Date.now() % 200;
+						const fileName = `diffuse-the-rest-${imgId}.png`;
+						return new File([blob], fileName, { type: 'image/png' });
+					})
+				)) as File[]
+			};
 
 			isShowSketch = true;
 			let i = 0;
@@ -327,9 +342,6 @@
 	}
 
 	async function uploadFile(file: File): Promise<string> {
-		// const delay = ms => new Promise(res => setTimeout(res, ms));
-		// await delay(5000);
-		// return "abc.zyx";
 		const UPLOAD_URL = "https://huggingface.co/uploads";
 		const response = await fetch(UPLOAD_URL, {
 			method: "POST",
@@ -345,12 +357,27 @@
 
 	async function createCommunityPost() {
 		isUploading = true;
-		const { imgFile } = await getCanvasSnapshot(canvas);
-		const url = await uploadFile(imgFile);
+		// was there successful generation dawg
+
+		const files = [outputFiles.sketch, ...outputFiles.generations];
+		const urls = await Promise.all(files.map((f) => uploadFile(f)));
+		const htmlImgs = urls.map(url => `<img src="${url}" width="400" height="400">`);
+		const descriptionMd = `#### Prompt:
+${promptTxt}
+
+#### Sketch:
+<div style="display: flex; overflow: scroll; column-gap: 0.75rem;">
+${htmlImgs[0]}
+</div>
+
+#### Generations:
+<div style="display: flex; flex-wrap: wrap; column-gap: 0.75rem;">
+${htmlImgs.slice(1).join("\n")}
+</div>`;
 
 		const params = new URLSearchParams({
 			title: promptTxt,
-			description: `![diffuse-the-rest.png](${url})`,
+			description: descriptionMd,
 		});
 
 		const paramsStr = params.toString();
@@ -417,7 +444,7 @@
 		{#if canvas}
 			 <div>
 				<div class="w-full flex justify-end">
-					<!-- <ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading}/> -->
+					<ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading}/>
 				</div>
 				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <span
