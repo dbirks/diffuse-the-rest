@@ -417,7 +417,7 @@
 		{#if canvas}
 			 <div>
 				<div class="w-full flex justify-end">
-					<!-- <ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading}/> -->
+					<ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading}/>
 				</div>
 				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <span
