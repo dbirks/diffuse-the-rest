@@ -362,6 +362,7 @@
 		isUploading = true;
 
 		const files = [outputFiles.sketch, ...outputFiles.generations];
+		console.log(files)
 		const urls = await Promise.all(files.map((f) => uploadFile(f)));
 		const htmlImgs = urls.map(url => `<img src="${url}" width="400" height="400">`);
 		const descriptionMd = `#### Prompt:
@@ -446,7 +447,7 @@ ${htmlImgs.slice(1).join("\n")}
 		{#if canvas}
 			 <div>
 				<div class="w-full flex justify-end">
-					<!-- <ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading} isVisisble={isSuccessfulGeneration}/> -->
+					<ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading} isVisisble={isSuccessfulGeneration}/>
 				</div>
 				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <span
