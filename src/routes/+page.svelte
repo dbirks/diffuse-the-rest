@@ -6,6 +6,7 @@
 	let isLoading = false;
 	let isUploading = false;
 	let isOutputControlAdded = false;
+	let isSuccessfulGeneration = false;
 	let drawingBoard: any;
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D | null;
@@ -91,6 +92,7 @@
 		}
 		isLoading = true;
 		isShowSketch = false;
+		isSuccessfulGeneration = false;
 		copySketch();
 
 		// start noise animation
@@ -167,6 +169,7 @@
 			if (!isOutputControlAdded) {
 				addOutputControl();
 			}
+			isSuccessfulGeneration = true;
 		} catch (err) {
 			console.error(err);
 			alert('Error happened, queue might be full. Please try again in a bit :)');
@@ -357,7 +360,6 @@
 
 	async function createCommunityPost() {
 		isUploading = true;
-		// was there successful generation dawg
 
 		const files = [outputFiles.sketch, ...outputFiles.generations];
 		const urls = await Promise.all(files.map((f) => uploadFile(f)));
@@ -444,7 +446,7 @@ ${htmlImgs.slice(1).join("\n")}
 		{#if canvas}
 			 <div>
 				<div class="w-full flex justify-end">
-					<ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading}/>
+					<ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading} isVisisble={isSuccessfulGeneration}/>
 				</div>
 				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <span
