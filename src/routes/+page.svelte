@@ -138,12 +138,12 @@
 				sketch,
 				generations: (await Promise.all(
 					imagesBase64Strs.map(async (imgBase64Str) => {
-						const dataUrl = `data:image/png;base64, ${imgBase64Str}`;
+						const dataUrl = `data:image/jpeg;base64, ${imgBase64Str}`;
 						const res: Response = await fetch(dataUrl);
 						const blob: Blob = await res.blob();
 						const imgId = Date.now() % 200;
-						const fileName = `diffuse-the-rest-${imgId}.png`;
-						return new File([blob], fileName, { type: 'image/png' });
+						const fileName = `diffuse-the-rest-${imgId}.jpeg`;
+						return new File([blob], fileName, { type: 'image/jpeg' });
 					})
 				)) as File[]
 			};
@@ -447,7 +447,7 @@ ${htmlImgs.slice(1).join("\n")}
 		{#if canvas}
 			 <div>
 				<div class="w-full flex justify-end">
-					<!-- <ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading} isVisisble={isSuccessfulGeneration}/> -->
+					<ShareWithCommunity on:createCommunityPost={createCommunityPost} {isUploading} isVisisble={isSuccessfulGeneration}/>
 				</div>
 				 <div class="flex gap-x-2 mt-3 items-start justify-center {isLoading ? 'animate-pulse' : ''}">
 					 <span
