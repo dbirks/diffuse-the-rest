@@ -7,5 +7,5 @@ a {
 }
 
 .drawing-board-controls {
-	@apply !border-spacing-0 md:!border-spacing-2;
+	@apply !border-spacing-0.5 md:!border-spacing-2;
 }
