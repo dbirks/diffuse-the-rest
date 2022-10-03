@@ -15,7 +15,7 @@ const config = {
 
 	kit: {
 		paths: {
-			base: dev ? '' : '/staticspaceiframe/huggingface/diffuse-the-rest/build'
+			base: dev ? '' : '/staticspaceiframe/huggingface-projects/diffuse-the-rest/build'
 		},
 		adapter: adapter(),
 		prerender: {
