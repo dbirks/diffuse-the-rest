@@ -384,7 +384,7 @@ ${htmlImgs.slice(1).join("\n")}
 		});
 
 		const paramsStr = params.toString();
-		window.open(`https://huggingface.co/spaces/huggingface-projects/diffuse-the-rest/discussions/new?${paramsStr}`, '_blank');
+		window.open(`${window.location.href}/discussions/new?${paramsStr}`, '_blank');
 		isUploading = false;
 	}
 
