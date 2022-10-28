@@ -513,6 +513,7 @@ ${htmlImgs.slice(1).join("\n")}
 <article class="prose-sm px-4 md:px-12 lg:px-56 mb-8 {!canvas ? 'hidden' : ''}">
 
 	<div class="text-center">
+
 		This is a fork of Huggingface's [diffuse-the-rest](https://huggingface.co/spaces/huggingface-projects/diffuse-the-rest), with the additional ability to change the strength, and other just miscellaneous tweaks.
 
 		Github repo: [dbirks/diffuse-the-rest](https://github.com/dbirks/diffuse-the-rest)
@@ -526,6 +527,7 @@ ${htmlImgs.slice(1).join("\n")}
 		Powered by [🤗 Diffusers: State-of-the-art diffusion models for image and audio generation in PyTorch](https://github.com/huggingface/diffusers). Based on [notebook by @psuraj28](https://twitter.com/psuraj28/status/1562039265126670339)
 		
 		Check out [Stable Diffusion Gradio demo](https://huggingface.co/spaces/stabilityai/stable-diffusion)
+
 	</div>
 
 ### LICENSE
