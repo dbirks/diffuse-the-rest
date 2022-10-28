@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import ShareWithCommunity from "$lib/ShareWithCommunity.svelte";
 
-	let txt = '';
+	let promptTxt = '';
 	let strength = '0.85';
 	let imagesReturned = '0';
 	let isLoading = false;
+	let isUploading = false;
 	let isOutputControlAdded = false;
+	let isSuccessfulGeneration = false;
 	let drawingBoard: any;
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D | null;
@@ -19,6 +22,7 @@
 	let sketchEl: HTMLCanvasElement;
 	let isShowSketch = false;
 	let outputImgs: CanvasImageSource[] = [];
+	let outputFiles: {sketch: File, generations: File[]};
 
 	const animImageDuration = 500 as const;
 	const animNoiseDuration = 3000 as const;
@@ -77,7 +81,7 @@
 	}
 
 	async function submitRequest() {
-		if (!txt) {
+		if (!promptTxt) {
 			return alert('Please add prompt');
 		}
 
@@ -90,17 +94,18 @@
 		}
 		isLoading = true;
 		isShowSketch = false;
+		isSuccessfulGeneration = false;
 		copySketch();
 
 		// start noise animation
 		noiseTs = performance.now();
 		drawNoise();
 
-		const { imgFile, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
+		const { imgFile: sketch, imgBitmap: initialSketchBitmap } = await getCanvasSnapshot(canvas);
 		const form = new FormData();
-		form.append('prompt', txt);
+		form.append('prompt', promptTxt);
 		form.append('strength', strength);
-		form.append('image', imgFile);
+		form.append('image', sketch);
 
 		try {
 			const response = await fetch('https://sdb.pcuenca.net/i2i', {
@@ -133,6 +138,20 @@
 			)) as CanvasImageSource[];
 			outputImgs.push(initialSketchBitmap);
 
+			outputFiles = {
+				sketch,
+				generations: (await Promise.all(
+					imagesBase64Strs.map(async (imgBase64Str) => {
+						const dataUrl = `data:image/jpeg;base64, ${imgBase64Str}`;
+						const res: Response = await fetch(dataUrl);
+						const blob: Blob = await res.blob();
+						const imgId = Date.now() % 200;
+						const fileName = `diffuse-the-rest-${imgId}.jpeg`;
+						return new File([blob], fileName, { type: 'image/jpeg' });
+					})
+				)) as File[]
+			};
+
 			isShowSketch = true;
 			let i = 0;
 			imageTs = performance.now();
@@ -154,6 +173,7 @@
 			if (!isOutputControlAdded) {
 				addOutputControl();
 			}
+			isSuccessfulGeneration = true;
 		} catch (err) {
 			console.error(err);
 			alert('Error happened, queue might be full. Please try again in a bit :)');
@@ -328,6 +348,50 @@
 		}
 	}
 
+	async function uploadFile(file: File): Promise<string> {
+		const UPLOAD_URL = "https://huggingface.co/uploads";
+		const response = await fetch(UPLOAD_URL, {
+			method: "POST",
+			headers: {
+				"Content-Type": file.type,
+				"X-Requested-With": "XMLHttpRequest",
+			},
+			body: file, /// <- File inherits from Blob
+		});
+		const url = await response.text();
+		return url;
+	}
+
+	async function createCommunityPost() {
+		isUploading = true;
+
+		const files = [outputFiles.sketch, ...outputFiles.generations];
+		console.log(files)
+		const urls = await Promise.all(files.map((f) => uploadFile(f)));
+		const htmlImgs = urls.map(url => `<img src="${url}" width="400" height="400">`);
+		const descriptionMd = `#### Prompt:
+${promptTxt}
+
+#### Sketch:
+<div style="display: flex; overflow: scroll; column-gap: 0.75rem;">
+${htmlImgs[0]}
+</div>
+
+#### Generations:
+<div style="display: flex; flex-wrap: wrap; column-gap: 0.75rem;">
+${htmlImgs.slice(1).join("\n")}
+</div>`;
+
+		const params = new URLSearchParams({
+			title: promptTxt,
+			description: descriptionMd,
+		});
+
+		const paramsStr = params.toString();
+		window.open(`https://huggingface.co/spaces/huggingface-projects/diffuse-the-rest/discussions/new?${paramsStr}`, '_blank');
+		isUploading = false;
+	}
+
 	onMount(async () => {
 		if (typeof createImageBitmap === 'undefined') {
 			polyfillCreateImageBitmap();
@@ -409,7 +473,7 @@
 						spellcheck="false"
 						dir="auto"
 						maxlength="1000"
-						bind:textContent={txt}
+						bind:textContent={promptTxt}
 						on:keydown={onKeyDown}
 					/>
 				 </div>
