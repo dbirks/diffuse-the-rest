@@ -12,9 +12,6 @@ const config = {
 	preprocess: [preprocess(), mdsvex(mdsvexConfig)],
 
 	kit: {
-		paths: {
-			base: dev ? '' : '/staticspaceiframe/dbirks/diffuse-the-rest/build'
-		},
 		adapter: adapter(),
 		prerender: {
 			default: true
