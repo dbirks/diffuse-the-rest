@@ -515,6 +515,8 @@ ${htmlImgs.slice(1).join("\n")}
 	<div class="text-center">
 		This is a fork of Huggingface's [diffuse-the-rest](https://huggingface.co/spaces/huggingface-projects/diffuse-the-rest), with the additional ability to change the strength, and other just miscellaneous tweaks.
 
+		Github repo: [dbirks/diffuse-the-rest](https://github.com/dbirks/diffuse-the-rest)
+
 		Hi Rachel 👋🙂
 
 		<hr>
